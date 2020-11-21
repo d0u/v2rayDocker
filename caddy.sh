@@ -37,6 +37,10 @@ cat > /etc/v2ray/config.json <<'EOF'
           }
         ]
       },
+      "sniffing": {
+        "enabled": true, //一定要开启 sniffing，V2Ray 才能识别 google 的流量
+        "destOverride": ["http", "tls"]
+      },
       "streamSettings": {
         "network": "ws",
         "wsSettings": {
@@ -45,28 +49,34 @@ cat > /etc/v2ray/config.json <<'EOF'
       }
     }
   ],
-  "outbounds": [
+"outbounds": [
     {
+      "tag":"IP4_out",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag":"IP6_out",
       "protocol": "freedom",
       "settings": {
-      "domainStrategy": "UseIPv6"
-      },
-       "tag": "IP6-out"
+        "domainStrategy": "UseIPv6" // 指定使用 IPv6
+      }
     }
   ],
   "routing": {
-    "domainStrategy": "IPOnDemand",
     "rules": [
       {
         "type": "field",
-        "domain": [
-          "domain:google.com",
-          "domain:google.com.hk"
-        ],
-        "outboundTag": "IP6-out" // 这个地方的要和 outbounds 里面的 tag 相同
+        "outboundTag": "IP6_out",
+        "domain": ["geosite:google"] // google 走 IPv6
+      },
+      {
+        "type": "field",
+        "outboundTag": "IP4_out",
+        "network": "udp,tcp"// 其余走 IPv4
       }
-      ]
-      }
+    ]
+  }
 }
 
 EOF

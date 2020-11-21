@@ -68,7 +68,7 @@ cat > /etc/v2ray/config.json <<'EOF'
       {
         "type": "field",
         "outboundTag": "IP6_out",
-        "domain": ["geosite:google"] // google 走 IPv6
+        "domain": ["domain:google.com"] // google 走 IPv6
       },
       {
         "type": "field",

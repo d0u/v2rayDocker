@@ -64,9 +64,9 @@ cat > /etc/v2ray/config.json <<'EOF'
           "domain:google.com.hk"
         ],
         "outboundTag": "IP6-out" // 这个地方的要和 outbounds 里面的 tag 相同
-      },
+      }
       ]
-      },
+      }
 }
 
 EOF

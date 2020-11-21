@@ -48,9 +48,25 @@ cat > /etc/v2ray/config.json <<'EOF'
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {}
+      "settings": {
+      "domainStrategy": "UseIPv6"
+      },
+       "tag": "IP6-out"
     }
-  ]
+  ],
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+      {
+        "type": "field",
+        "domain": [
+          "domain:google.com",
+          "domain:google.com.hk"
+        ],
+        "outboundTag": "IP6-out" // 这个地方的要和 outbounds 里面的 tag 相同
+      },
+      ]
+      },
 }
 
 EOF
